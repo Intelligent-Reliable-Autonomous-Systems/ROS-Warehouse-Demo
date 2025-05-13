@@ -1,13 +1,10 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.8)
 project(jackal_control)
 
-find_package(catkin REQUIRED COMPONENTS roslaunch)
-
-catkin_package()
-
-roslaunch_add_file_check(launch/control.launch)
-roslaunch_add_file_check(launch/teleop.launch)
+find_package(ament_cmake REQUIRED)
 
 install(DIRECTORY config launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION share/${PROJECT_NAME}
 )
+
+ament_package()

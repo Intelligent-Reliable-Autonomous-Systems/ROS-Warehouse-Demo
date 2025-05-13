@@ -1,14 +1,14 @@
 # This message represents Jackal's lower-frequency status updates
 # Default publish frequency is 1Hz.
 
-Header header
+std_msgs/Header header
 
 # Commit of firmware source.
 string hardware_id
 
 # Times since MCU power-on and MCU rosserial connection, respectively.
-duration mcu_uptime
-duration connection_uptime
+builtin_interfaces/Duration mcu_uptime
+builtin_interfaces/Duration connection_uptime
 
 # Monitoring the run/stop loop. Changes in these values trigger an immediate
 # publish, outside the ordinarily-scheduled 1Hz updates.

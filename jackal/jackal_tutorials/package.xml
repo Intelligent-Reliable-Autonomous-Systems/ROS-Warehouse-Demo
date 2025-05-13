@@ -9,8 +9,7 @@
 
   <url type="website">http://wiki.ros.org/jackal_msgs</url>
   <author email="mpurvis@clearpathrobotics.com">Mike Purvis</author>
-
-  <buildtool_depend>catkin</buildtool_depend>
+  
   <build_depend>rosdoc_lite</build_depend>
 
   <export>

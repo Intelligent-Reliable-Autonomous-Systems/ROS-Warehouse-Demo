@@ -9,3 +9,10 @@
 
 ### Launch simulation
 1. ros2 launch warehouse_setup launch_warehouse.py
+
+sudo apt-get install ros-jazzy-ros-gz
+sudo apt-get install ros-jazzy-clearpath-simulator
+
+wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_simulator/jazzy/dependencies.repos
+vcs import src < dependencies.repos
+rosdep install -r --from-paths src -i -y

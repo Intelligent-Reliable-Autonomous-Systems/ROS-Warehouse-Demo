@@ -27,7 +27,6 @@ def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration("use_sim_time")
     spawn_arm = LaunchConfiguration("spawn_arm")
     spawn_jackal = LaunchConfiguration("spawn_jackal")
-    setup_path = LaunchConfiguration("setup_path")
 
     pkg_warehouseworld = get_package_share_directory('warehouse_world')
     pkg_warehouse_setup = get_package_share_directory('warehouse_setup')
@@ -70,13 +69,7 @@ def launch_setup(context, *args, **kwargs):
         PythonLaunchDescriptionSource(PathJoinSubstitution(
         [pkg_warehouse_setup, 'launch', 'spawn_jackal.launch.py'])),
         launch_arguments={
-            "use_sim_time": use_sim_time,
-            "setup_path": setup_path,
             "world": "warehouse",
-            'x': LaunchConfiguration('x'),
-            'y': LaunchConfiguration('y'),
-            'z': LaunchConfiguration('z'),
-            'yaw': LaunchConfiguration('yaw')
         }.items(),
         condition=IfCondition(spawn_jackal)
     )
@@ -145,31 +138,6 @@ def generate_launch_description():
             "spawn_jackal",
             default_value="true",
             description="Spawn the Jackal",
-        )
-    )
-
-    for pose_element in ['x', 'y', 'yaw']:
-        declared_arguments.append(
-            DeclareLaunchArgument(
-                pose_element,
-                default_value='0.0',
-                description=f'{pose_element} component of the jackal pose.'
-            )
-        )
-
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            'z', 
-            default_value='0.3',
-            description='z component of the jackal pose.'
-            )
-        )
-
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            'setup_path',
-            default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
-            description='Clearpath setup path'
         )
     )
 

@@ -15,7 +15,7 @@
 # @author Roni Kreinin (rkreinin@clearpathrobotics.com)
 
 import os
-
+from ament_index_python.packages import get_package_prefix, get_package_share_directory
 from clearpath_config.clearpath_config import ClearpathConfig
 
 from launch import LaunchDescription
@@ -40,51 +40,31 @@ from launch_ros.substitutions import FindPackageShare
 
 
 ARGUMENTS = [
-    DeclareLaunchArgument('use_sim_time', default_value='true',
-                          choices=['true', 'false'],
-                          description='use_sim_time'),
     DeclareLaunchArgument('world', default_value='warehouse',
                           description='Gazebo World'),
-    DeclareLaunchArgument('setup_path',
-                          default_value=[EnvironmentVariable('HOME'), '/clearpath/'],
-                          description='Clearpath setup path'),
-    DeclareLaunchArgument('generate',
-                          default_value='true',
-                          choices=['true', 'false'],
-                          description='Generate parameters and launch files')
 ]
 
-for pose_element in ['x', 'y', 'yaw']:
-    ARGUMENTS.append(DeclareLaunchArgument(pose_element, default_value='0.0',
-                     description=f'{pose_element} component of the robot pose.'))
-
-ARGUMENTS.append(DeclareLaunchArgument('z', default_value='0.15',
-                 description='z component of the robot pose.'))
-
-
 def launch_setup(context, *args, **kwargs):
-    setup_path = LaunchConfiguration('setup_path')
+    pkg_jackal_description = get_package_share_directory('jackal_description')
+
     world = LaunchConfiguration('world')
-    use_sim_time = LaunchConfiguration('use_sim_time')
-    x, y, z = LaunchConfiguration('x'), LaunchConfiguration('y'), LaunchConfiguration('z')
-    yaw = LaunchConfiguration('yaw')
-    generate = LaunchConfiguration('generate')
 
     # Parse robot YAML into config
     clearpath_config = ClearpathConfig(os.path.join(
-        str(setup_path.perform(context)), 'robot.yaml'))
+        pkg_jackal_description, 'launch/robot.yaml'))
 
     namespace = clearpath_config.system.namespace
     if namespace in ('', '/'):
         robot_name = 'robot'
     else:
         robot_name = namespace + '/robot'
+    
 
     # Paths
     launch_file_platform_service = PathJoinSubstitution([
-        setup_path, 'platform/launch', 'platform-service.launch.py'])
+        pkg_jackal_description, 'launch/platform/launch', 'platform-service.launch.py'])
     launch_file_sensors_service = PathJoinSubstitution([
-        setup_path, 'sensors/launch', 'sensors-service.launch.py'])
+        pkg_jackal_description, 'launch/sensors/launch', 'sensors-service.launch.py'])
 
     group_action_spawn_robot = GroupAction([
 
@@ -106,89 +86,16 @@ def launch_setup(context, *args, **kwargs):
             executable='create',
             namespace=namespace,
             arguments=['-name', robot_name,
-                       '-x', x,
-                       '-y', y,
-                       '-z', z,
-                       '-Y', yaw,
+                       '-x', "0.0",
+                       '-y', "0.0",
+                       '-z', "0.1",
+                       '-Y', "0.0",
                        '-topic', 'robot_description'],
             output='screen'
         ),
     ])
 
-    node_generate_description = Node(
-        package='clearpath_generator_common',
-        executable='generate_description',
-        name='generate_description',
-        output='screen',
-        condition=IfCondition(generate),
-        arguments=['-s', setup_path]
-    )
-
-    node_generate_semantic_description = Node(
-        package='clearpath_generator_common',
-        executable='generate_semantic_description',
-        name='generate_semantic_description',
-        output='screen',
-        condition=IfCondition(generate),
-        arguments=['-s', setup_path]
-    )
-
-    node_generate_launch = Node(
-        package='clearpath_generator_gz',
-        executable='generate_launch',
-        name='generate_launch',
-        output='screen',
-        condition=IfCondition(generate),
-        arguments=['-s', setup_path]
-    )
-
-    node_generate_param = Node(
-        package='clearpath_generator_gz',
-        executable='generate_param',
-        name='generate_launch',
-        output='screen',
-        condition=IfCondition(generate),
-        arguments=['-s', setup_path]
-    )
-
-    event_generate_description = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=node_generate_description,
-            on_exit=[node_generate_semantic_description]
-        )
-    )
-
-    event_generate_semantic_description = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=node_generate_semantic_description,
-            on_exit=[node_generate_launch]
-        )
-    )
-
-    event_generate_launch = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=node_generate_launch,
-            on_exit=[node_generate_param]
-        )
-    )
-
-    event_generate_param = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=node_generate_param,
-            on_exit=[group_action_spawn_robot]
-        )
-    )
-
-    actions = [
-        node_generate_description,
-        event_generate_description,
-        event_generate_semantic_description,
-        event_generate_launch,
-        event_generate_param,
-    ]
-
-    if not bool(generate.perform(context)):
-        actions.append(group_action_spawn_robot)
+    actions = [group_action_spawn_robot]
 
     return actions
 

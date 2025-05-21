@@ -37,7 +37,7 @@ def launch_setup(context, *args, **kwargs):
         PythonLaunchDescriptionSource(PathJoinSubstitution([pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'])),
         launch_arguments={
             
-            "gz_args": f" -r -v 3 warehouse_world/worlds/warehouse2.sdf --physics-engine gz-physics-bullet-featherstone-plugin",
+            "gz_args": f" -r -v 3 warehouse_world/worlds/warehouse.sdf --physics-engine gz-physics-bullet-featherstone-plugin",
             "on_exit_shutdown": "True"
         }.items(),
         condition=IfCondition(sim_gazebo),
@@ -83,7 +83,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "worlds_file",
-            default_value="warehouse2.sdf",
+            default_value="warehouse.sdf",
             description="World to launch",
         )
     )

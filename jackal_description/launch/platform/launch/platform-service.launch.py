@@ -32,37 +32,11 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([launch_file_platform]),
         launch_arguments=
             [
-                (
-                    'setup_path'
-                    ,
-                    #'/home/will-solow/clearpath/'
-                    os.path.join(pkg_jackal_description, "launch/")
-                )
-                ,
-                (
-                    'use_sim_time'
-                    ,
-                    'true'
-                )
-                ,
-                (
-                    'namespace'
-                    ,
-                    'j100_0000'
-                )
-                ,
-                (
-                    'enable_ekf'
-                    ,
-                    'true'
-                )
-                ,
-                (
-                    'use_manipulation_controllers'
-                    ,
-                    'true'
-                )
-                ,
+                ('setup_path',os.path.join(pkg_jackal_description, "launch/")),
+                ('use_sim_time','true'),
+                ('namespace','j100_0000'),
+                ('enable_ekf', 'true'),
+                ('use_manipulation_controllers', 'true'),
             ]
     )
 
@@ -73,39 +47,18 @@ def generate_launch_description():
         package='ros_gz_bridge',
         namespace='j100_0000',
         output='screen',
-        arguments=
-            [
-                'j100_0000/cmd_vel@geometry_msgs/msg/TwistStamped[gz.msgs.Twist'
-                ,
-                '/model/j100_0000/robot/cmd_vel@geometry_msgs/msg/TwistStamped]gz.msgs.Twist'
-                ,
-            ]
-        ,
-        remappings=
-            [
-                (
-                    'j100_0000/cmd_vel'
-                    ,
-                    'cmd_vel'
-                )
-                ,
-                (
-                    '/model/j100_0000/robot/cmd_vel'
-                    ,
-                    'platform/cmd_vel'
-                )
-                ,
-            ]
-        ,
-        parameters=
-            [
-                {
-                    'use_sim_time': True
-                    ,
-                }
-                ,
-            ]
-        ,
+        arguments=[
+                'j100_0000/cmd_vel@geometry_msgs/msg/TwistStamped[gz.msgs.Twist',
+                '/model/j100_0000/robot/cmd_vel@geometry_msgs/msg/TwistStamped]gz.msgs.Twist',
+            ],
+        remappings=[
+                ('j100_0000/cmd_vel','cmd_vel'),
+                ('/model/j100_0000/robot/cmd_vel','platform/cmd_vel'),
+            ],
+        parameters=[{
+                    'use_sim_time': True,
+                },
+            ],
     )
 
     node_odom_base_tf_bridge = Node(
@@ -114,31 +67,18 @@ def generate_launch_description():
         package='ros_gz_bridge',
         namespace='j100_0000',
         output='screen',
-        arguments=
-            [
-                '/model/j100_0000/robot/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V'
-                ,
-            ]
-        ,
+        arguments=[
+            '/model/j100_0000/robot/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
+            ],
         remappings=
             [
-                (
-                    '/model/j100_0000/robot/tf'
-                    ,
-                    'tf'
-                )
-                ,
-            ]
-        ,
+                ('/model/j100_0000/robot/tf','tf'),
+            ],
         parameters=
             [
-                {
-                    'use_sim_time': True
-                    ,
-                }
-                ,
-            ]
-        ,
+                {'use_sim_time': True,
+                },
+            ],
     )
 
     node_imu_0_gz_bridge = Node(
@@ -149,16 +89,10 @@ def generate_launch_description():
         output='screen',
         parameters=
             [
-                {
-                    'use_sim_time': True
-                    ,
-                    #'config_file': '/home/will-solow/clearpath/sensors/config/imu_0.yaml'
-                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/imu_0.yaml")
-                    ,
-                }
-                ,
-            ]
-        ,
+                {'use_sim_time': True,
+                'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/imu_0.yaml"),
+                },
+            ],
     )
 
     node_imu_filter_node = Node(
@@ -169,38 +103,15 @@ def generate_launch_description():
         output='screen',
         remappings=
             [
-                (
-                    'imu/data_raw'
-                    ,
-                    'sensors/imu_0/data_raw'
-                )
-                ,
-                (
-                    'imu/mag'
-                    ,
-                    'sensors/imu_0/magnetic_field'
-                )
-                ,
-                (
-                    'imu/data'
-                    ,
-                    'sensors/imu_0/data'
-                )
-                ,
-                (
-                    '/tf'
-                    ,
-                    'tf'
-                )
-                ,
-            ]
-        ,
+                ('imu/data_raw','sensors/imu_0/data_raw'),
+                ('imu/mag','sensors/imu_0/magnetic_field'),
+                ('imu/data','sensors/imu_0/data'),
+                ('/tf','tf'),
+            ],
         parameters=
             [
-                imu_filter
-                ,
-            ]
-        ,
+                imu_filter,
+            ],
     )
 
     node_gps_0_gz_bridge = Node(
@@ -209,18 +120,12 @@ def generate_launch_description():
         package='ros_gz_bridge',
         namespace='j100_0000',
         output='screen',
-        parameters=
-            [
+        parameters=[
                 {
-                    'use_sim_time': True
-                    ,
-                    #'config_file': '/home/will-solow/clearpath/sensors/config/gps_0.yaml'
-                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/gps_0.yaml")
-                    ,
-                }
-                ,
-            ]
-        ,
+                    'use_sim_time': True,
+                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/gps_0.yaml"),
+                },
+            ],
     )
 
     # Create LaunchDescription

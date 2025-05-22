@@ -176,7 +176,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "spawn_jackal",
-            default_value="false",
+            default_value="true",
             description="Spawn the Jackal",
         )
     )

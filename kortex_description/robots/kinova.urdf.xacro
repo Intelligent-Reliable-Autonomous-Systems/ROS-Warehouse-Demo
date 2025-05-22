@@ -23,11 +23,7 @@
   <xacro:arg name="use_internal_bus_gripper_comm" default="false" />
   <xacro:arg name="use_fake_hardware" default="false" />
   <xacro:arg name="fake_sensor_commands" default="false" />
-  <xacro:arg name="sim_gazebo" default="false" />
-  <xacro:arg name="sim_isaac" default="false" />
-  <xacro:arg name="gazebo_renderer" default="ogre"/>
-  <xacro:arg name="camera_width" default="640"/>
-  <xacro:arg name="camera_height" default="480"/>
+  <xacro:arg name="sim_gazebo" default="true" />
   <xacro:arg name="camera_fps" default="6"/>
   <xacro:arg name="simulation_controllers" default="$(find kortex_description)/arm/$(arg arm)/$(arg dof)dof/config/ros2_controllers.yaml" />
   <xacro:arg name="moveit_active" default="false"/>
@@ -65,7 +61,6 @@
     use_fake_hardware="$(arg use_fake_hardware)"
     fake_sensor_commands="$(arg fake_sensor_commands)"
     sim_gazebo="$(arg sim_gazebo)"
-    sim_isaac="$(arg sim_isaac)"
     initial_positions="${xacro.load_yaml(initial_positions_file)}"
     moveit_active="$(arg moveit_active)">
     <origin xyz="0 0 0" rpy="0 0 0" />  <!-- position robot in the world -->
@@ -80,71 +75,49 @@
         <parameters>$(arg simulation_controllers)</parameters>
         <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
       </plugin>
-      <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
-        <render_engine>$(arg gazebo_renderer)</render_engine>
-      </plugin>
     </gazebo>
-    <gazebo reference="camera_color_frame">
-      <sensor name="camera_sensor" type="rgbd_camera">
-        <camera>
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-            <width>$(arg camera_width)</width>
-            <height>$(arg camera_height)</height>
-            <format>RGB_INT8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>5</far>
-          </clip>
-          <distortion>
-            <k1>0.0</k1>
-            <k2>0.0</k2>
-            <k3>0.0</k3>
-            <p1>0.0</p1>
-            <p2>0.0</p2>
-            <center>0.5 0.5</center>
-          </distortion>
-          <lens>
-            <intrinsics>
-              <fx>554.25469</fx>
-              <fy>554.25469</fy>
-              <cx>320.5</cx>
-              <cy>240.5</cy>
-              <s>0</s>
-            </intrinsics>
-            <!-- These need to match the intrinsics above or
-            Gazebo will default to different default values -->
-            <projection>
-              <p_fx>554.25469</p_fx>
-              <p_fy>554.25469</p_fy>
-              <p_cx>320.5</p_cx>
-              <p_cy>240.5</p_cy>
-              <tx>0</tx>
-              <ty>0</ty>
-            </projection>
-          </lens>
-          <noise>
-            <type>gaussian</type>
-            <mean>0</mean>
-            <stddev>0.00</stddev>
-          </noise>
-          <depth_camera>
+
+    <gazebo reference="kinova/camera_color_frame">
+      <sensor name="depth_camera" type="depth">
+          <pose>0 0 0 0 0 0</pose>
+          <update_rate>6</update_rate>
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
             <clip>
-              <near>0.25</near>
-              <far>5</far>
+              <near>0.1</near>
+              <far>10</far>
             </clip>
-          </depth_camera>
-          <optical_frame_id>color_optical_frame</optical_frame_id>
-        </camera>
-        <gz_frame_id>camera_color_frame</gz_frame_id>
-        <always_on>1</always_on>
-        <update_rate>$(arg camera_fps)</update_rate>
-        <visualize>true</visualize>
-        <topic>wrist_mounted_camera</topic>
-        <enable_metrics>false</enable_metrics>
-      </sensor>
+          </camera>
+          <visualize>true</visualize>
+        <topic>kinova/wrist_camera/depth</topic>
+        <enable_metrics>true</enable_metrics>
+        </sensor>
+
+        <sensor name="rgb_camera" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <update_rate>6</update_rate>
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format> <!-- or "R8G8B8" for color -->
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>10</far>
+            </clip>
+          </camera>
+          <topic>kinova/wrist_camera/color</topic>
+        <enable_metrics>true</enable_metrics>
+        </sensor>
     </gazebo>
+
   </xacro:if>
 
 </robot>

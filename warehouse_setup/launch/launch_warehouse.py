@@ -84,6 +84,44 @@ def launch_setup(context, *args, **kwargs):
         ]
     )
 
+    table_camera_bridge = Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            name='table_camera_bridge',
+            output='screen',
+            arguments=[
+                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
+                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image',
+                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
+            ],
+            remappings=[
+                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image', '/table_camera/depth/image_raw'),
+                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/camera_info', '/table_camera/camera_info'),
+                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/image', '/table_camera/image/image_raw'),
+                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image/points', '/table_camera/depth/points'),
+            ]
+        )
+    
+    world_camera_bridge = Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            name='world_camera_bridge',
+            output='screen',
+            arguments=[
+                '/world/warehouse/model/world_camera/link/camera_link/sensor/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+                '/world/warehouse/model/world_camera/link/camera_link/sensor/rgb_camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
+                '/world/warehouse/model/world_camera/link/camera_link/sensor/rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image',
+                '/world/warehouse/model/world_camera/link/camera_link/sensor/rgbd_camera/depth_image/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
+            ],
+            remappings=[
+                ('/world/warehouse/model/world_camera/link/camera_link/sensor/rgbd_camera/depth_image', '/world_camera/depth/image_raw'),
+                ('/world/warehouse/model/world_camera/link/camera_link/sensor/rgbd_camera/camera_info', '/world_camera/camera_info'),
+                ('/world/warehouse/model/world_camera/link/camera_link/sensor/rgb_camera/image', '/world_camera/image/image_raw'),
+                ('/world/warehouse/model/world_camera/link/camera_link/sensor/rgbd_camera/depth_image/points', '/world_camera/depth/points'),
+            ]
+        )
+
     nodes_to_launch = [
         gz_sim_resource_path,
         warehouse_resource_path,
@@ -91,6 +129,8 @@ def launch_setup(context, *args, **kwargs):
         kinova_arm_launch,
         jackal_launch,
         clock_bridge,
+        table_camera_bridge,
+        world_camera_bridge,
     ]
 
     return nodes_to_launch
@@ -136,7 +176,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "spawn_jackal",
-            default_value="true",
+            default_value="false",
             description="Spawn the Jackal",
         )
     )

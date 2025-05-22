@@ -5,12 +5,17 @@ from launch.substitutions import EnvironmentVariable, FindExecutable, PathJoinSu
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+from ament_index_python.packages import get_package_prefix, get_package_share_directory
+import os
 
 def generate_launch_description():
 
+    pkg_jackal_description = get_package_share_directory("jackal_description")
+
     launch_arg_imu_filter = DeclareLaunchArgument(
         'imu_filter',
-        default_value='/home/will-solow/clearpath/platform/config/imu_filter.yaml',
+        #default_value='/home/will-solow/clearpath/platform/config/imu_filter.yaml',
+        default_value = os.path.join(pkg_jackal_description, "launch/platform/config/imu_filter.yaml"),
         description='')
 
     imu_filter = LaunchConfiguration('imu_filter')
@@ -30,7 +35,8 @@ def generate_launch_description():
                 (
                     'setup_path'
                     ,
-                    '/home/will-solow/clearpath/'
+                    #'/home/will-solow/clearpath/'
+                    os.path.join(pkg_jackal_description, "launch/")
                 )
                 ,
                 (
@@ -146,7 +152,8 @@ def generate_launch_description():
                 {
                     'use_sim_time': True
                     ,
-                    'config_file': '/home/will-solow/clearpath/sensors/config/imu_0.yaml'
+                    #'config_file': '/home/will-solow/clearpath/sensors/config/imu_0.yaml'
+                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/imu_0.yaml")
                     ,
                 }
                 ,
@@ -207,7 +214,8 @@ def generate_launch_description():
                 {
                     'use_sim_time': True
                     ,
-                    'config_file': '/home/will-solow/clearpath/sensors/config/gps_0.yaml'
+                    #'config_file': '/home/will-solow/clearpath/sensors/config/gps_0.yaml'
+                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/gps_0.yaml")
                     ,
                 }
                 ,

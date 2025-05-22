@@ -4,6 +4,7 @@
 
   <!-- Propagate last link name information because it is the gripper's parent link -->
   <xacro:property name="last_arm_link" value="dummy_link"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
 
   <xacro:macro name="load_arm" params="
     parent
@@ -34,6 +35,7 @@
 
     <!-- ros2 control include -->
     <xacro:include filename="$(find kortex_description)/arms/gen3_lite/${dof}dof/urdf/kortex.ros2_control.xacro" />
+
     <xacro:if value="${sim_gazebo}">
       <xacro:unless value="${moveit_active}">
         <xacro:property name="ros2_control_name" value="GazeboSimSystem"/>
@@ -282,5 +284,29 @@
       <axis xyz="0 0 1" />
       <limit lower="0" upper="0" effort="0" velocity="0" />
     </joint>
+
+    <xacro:if value="${vision}">
+      <!-- sim camera needs to be rotated which might not apply to built in vision module -->
+      <xacro:if value="${sim_gazebo}">
+        <link name="${prefix}camera_link" />
+        <joint name="${prefix}camera_module" type="fixed">
+          <origin xyz="0 0.05639 0.01305" rpy="0 ${-PI/2} ${-PI/2}" />
+          <parent link="${prefix}end_effector_link" />
+          <child  link="${prefix}camera_link" />
+        </joint>
+        <link name="${prefix}camera_depth_frame" />
+        <joint name="${prefix}depth_module" type="fixed">
+          <origin xyz="0.0275 0.066 0.01305" rpy="0 ${-PI/2} ${-PI/2}" />
+          <parent link="${prefix}end_effector_link" />
+          <child  link="${prefix}camera_depth_frame" />
+        </joint>
+        <link name="${prefix}camera_color_frame" />
+        <joint name="${prefix}color_module" type="fixed">
+          <origin xyz="0 0.05639 0.01305" rpy="0 ${-PI/2} ${-PI/2}" />
+          <parent link="${prefix}end_effector_link" />
+          <child  link="${prefix}camera_color_frame" />
+        </joint>
+      </xacro:if>
+    </xacro:if>
   </xacro:macro>
 </robot>

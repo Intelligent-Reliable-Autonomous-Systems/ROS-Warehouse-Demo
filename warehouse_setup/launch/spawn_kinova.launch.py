@@ -15,7 +15,7 @@
 # Author: Marq Rasmussen
 
 import os
-from ament_index_python.packages import get_package_prefix
+from ament_index_python.packages import get_package_prefix, get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import (
     AppendEnvironmentVariable,
@@ -125,7 +125,7 @@ def launch_setup(context, *args, **kwargs):
     robot_traj_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=[robot_traj_controller, "-c", "/controller_manager"],
+        arguments=[robot_traj_controller, "-c", "controller_manager"],
     )
 
     robot_model = robot_type.perform(context)
@@ -136,14 +136,14 @@ def launch_setup(context, *args, **kwargs):
     robot_hand_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=[robot_hand_controller, "-c", "/controller_manager"],
+        arguments=[robot_hand_controller, "-c", "controller_manager"],
         condition=UnlessCondition(is_gen3_lite),
     )
 
     robot_hand_lite_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=[robot_lite_hand_controller, "-c", "/controller_manager"],
+        arguments=[robot_lite_hand_controller, "-c", "controller_manager"],
         condition=IfCondition(is_gen3_lite),
     )
 
@@ -180,15 +180,21 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # Bridge
-    gazebo_bridge = Node(
+    camera_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         parameters=[{"use_sim_time": use_sim_time}],
         arguments=[
-            "/wrist_mounted_camera/image@sensor_msgs/msg/Image[gz.msgs.Image",
-            "/wrist_mounted_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image",
-            "/wrist_mounted_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
-            "/wrist_mounted_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
+            "/kinova/wrist_camera/color@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/kinova/wrist_camera/depth@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/kinova/wrist_camera/depth/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            "/kinova/wrist_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
+        ],
+        remappings= [
+            ("/kinova/wrist_camera/color", "kinova_wrist_camera/color"),
+            ("/kinova/wrist_camera/depth", "kinova_wrist_camera/depth"),
+            ("/kinova/wrist_camera/depth/points", "kinova_wrist_camera/depth/points"),
+            ("/kinova/wrist_camera/camera_info", "kinova_wrist_camera/camera_info"),
         ],
         output="screen",
     )
@@ -201,7 +207,7 @@ def launch_setup(context, *args, **kwargs):
         robot_hand_lite_controller_spawner,
         gz_robotiq_env_var_resource_path,
         gz_spawn_entity,
-        gazebo_bridge,
+        camera_bridge,
     ]
 
     return nodes_to_start
@@ -247,7 +253,7 @@ def generate_launch_description():
             "vision",
             description="Use arm mounted realsense",
             choices=["true", "false"],
-            default_value="false",
+            default_value="true",
         )
     )
     # General arguments

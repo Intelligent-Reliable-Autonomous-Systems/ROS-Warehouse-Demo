@@ -16,3 +16,7 @@ sudo apt-get install ros-jazzy-clearpath-simulator
 wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_simulator/jazzy/dependencies.repos
 vcs import src < dependencies.repos
 rosdep install -r --from-paths src -i -y
+
+ros2 topic pub /j100_0000/cmd_vel geometry_msgs/msg/TwistStamped \
+"{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'base_link'}, twist: {linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}}" \
+--once

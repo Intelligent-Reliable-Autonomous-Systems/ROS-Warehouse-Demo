@@ -29,12 +29,15 @@
 
 
   <!-- Sensors -->
-
-  <!-- gps_1 -->
-  <xacro:include filename="$(find clearpath_sensors_description)/urdf/microstrain_gq7.urdf.xacro"/>
-  <xacro:microstrain_gq7 name="gps_1" parent_link="rear_0_mount">
+  <xacro:include filename="$(find clearpath_sensors_description)/urdf/axis_camera.urdf.xacro"/>
+  <xacro:axis_camera name="camera_0" parent_link="front_0_mount">
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-  </xacro:microstrain_gq7>
+  </xacro:axis_camera>
+
+  <xacro:include filename="$(find clearpath_sensors_description)/urdf/hokuyo_ust.urdf.xacro"/>
+  <xacro:hokuyo_ust name="lidar_0" parent_link="rear_0_mount">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </xacro:hokuyo_ust>
 
 
   <!-- Manipulators -->

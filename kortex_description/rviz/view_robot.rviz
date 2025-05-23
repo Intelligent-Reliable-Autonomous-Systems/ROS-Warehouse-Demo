@@ -50,7 +50,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /robot_description
+        Value: /kinova/robot_description
       Enabled: true
       Links:
         All Links Enabled: true

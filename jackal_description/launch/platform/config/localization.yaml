@@ -18,8 +18,3 @@ j100_0000:
       imu0_differential: False
       imu0_queue_size: 10
       imu0_remove_gravitational_acceleration: True
-      imu2: 'sensors/gps_1/imu/data'
-      imu2_config: [False, False, False, False, False, False, False, False, False, False, False, True, True, False, False]
-      imu2_differential: False
-      imu2_queue_size: 10
-      imu2_remove_gravitational_acceleration: True

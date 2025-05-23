@@ -241,5 +241,44 @@
         </uri>
     </include>
 
+    <include>
+        <name>BigYellowBlock</name>
+        <pose>9 -5 0 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/big_block_yellow
+        </uri>
+    </include>
+
+    <include>
+        <name>BigRedBlock</name>
+        <pose>-8 -7 0 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/big_block_red
+        </uri>
+    </include>
+
+    <include>
+        <name>BigBlueBlock</name>
+        <pose>5 3 0 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/big_block_blue
+        </uri>
+    </include>
+    
+    <include>
+        <name>BigGreenBlock</name>
+        <pose>-8 6 0 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/big_block_green
+        </uri>
+    </include>
+
+    <include>
+        <name>BigPurpleBlock</name>
+        <pose>-5 -2 0 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/big_block_purple
+        </uri>
+    </include>
   </world>
 </sdf>

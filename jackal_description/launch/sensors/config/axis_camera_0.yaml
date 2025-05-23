@@ -1,0 +1,13 @@
+- ros_topic_name: sensors/camera_0/camera_info
+  gz_topic_name: /j100_0000/sensors/camera_0/camera_info
+  ros_type_name: sensor_msgs/msg/LaserScan
+  gz_type_name: gz.msgs.CameraInfo
+  direction: GZ_TO_ROS
+- ros_topic_name: sensors/camera_0/image
+  gz_topic_name: /j100_0000/sensors/camera_0/image
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: gz.msgs.Image
+  direction: GZ_TO_ROS
+
+  
+

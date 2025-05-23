@@ -7,5 +7,4 @@ j100_0000:
       latest_apt_firmware_version: 'simulated'
       installed_apt_firmware_version: 'simulated'
       use_sim_time: True
-      topics.sensors/gps_1/fix.type: 'sensor_msgs/msg/NavSatFix'
-      topics.sensors/gps_1/fix.rate: 2.0
+

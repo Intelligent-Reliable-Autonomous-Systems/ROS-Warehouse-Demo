@@ -50,7 +50,6 @@ def launch_setup(context, *args, **kwargs):
     robot_name = LaunchConfiguration("robot_name")
     prefix = LaunchConfiguration("prefix")
     robot_traj_controller = LaunchConfiguration("robot_controller")
-    robot_hand_controller = LaunchConfiguration("robot_hand_controller")
     robot_lite_hand_controller = LaunchConfiguration("robot_lite_hand_controller")
     use_sim_time = LaunchConfiguration("use_sim_time")
     gripper = LaunchConfiguration("gripper")
@@ -128,23 +127,10 @@ def launch_setup(context, *args, **kwargs):
         arguments=[robot_traj_controller, "-c", "controller_manager"],
     )
 
-    robot_model = robot_type.perform(context)
-    is_gen3_lite = "false"
-    if robot_model == "gen3_lite":
-        is_gen3_lite = "true"
-
-    robot_hand_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=[robot_hand_controller, "-c", "controller_manager"],
-        condition=UnlessCondition(is_gen3_lite),
-    )
-
     robot_hand_lite_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[robot_lite_hand_controller, "-c", "controller_manager"],
-        condition=IfCondition(is_gen3_lite),
     )
 
     robotiq_description_prefix = get_package_prefix("robotiq_description")
@@ -184,6 +170,7 @@ def launch_setup(context, *args, **kwargs):
         package="ros_gz_bridge",
         executable="parameter_bridge",
         parameters=[{"use_sim_time": use_sim_time}],
+        namespace="kinova",
         arguments=[
             "/kinova/wrist_camera/color@sensor_msgs/msg/Image[gz.msgs.Image",
             "/kinova/wrist_camera/depth@sensor_msgs/msg/Image[gz.msgs.Image",
@@ -191,10 +178,10 @@ def launch_setup(context, *args, **kwargs):
             "/kinova/wrist_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
         remappings= [
-            ("/kinova/wrist_camera/color", "kinova_wrist_camera/color"),
-            ("/kinova/wrist_camera/depth", "kinova_wrist_camera/depth"),
-            ("/kinova/wrist_camera/depth/points", "kinova_wrist_camera/depth/points"),
-            ("/kinova/wrist_camera/camera_info", "kinova_wrist_camera/camera_info"),
+            ("/kinova/wrist_camera/color", "wrist_camera/color"),
+            ("/kinova/wrist_camera/depth", "wrist_camera/depth"),
+            ("/kinova/wrist_camera/depth/points", "wrist_camera/depth/points"),
+            ("/kinova/wrist_camera/camera_info", "wrist_camera/camera_info"),
         ],
         output="screen",
     )
@@ -203,7 +190,6 @@ def launch_setup(context, *args, **kwargs):
         robot_state_publisher_node,
         joint_state_broadcaster_spawner,
         robot_traj_controller_spawner,
-        robot_hand_controller_spawner,
         robot_hand_lite_controller_spawner,
         gz_robotiq_env_var_resource_path,
         gz_spawn_entity,
@@ -300,13 +286,6 @@ def generate_launch_description():
             "robot_controller",
             default_value="joint_trajectory_controller",
             description="Robot controller to start.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "robot_hand_controller",
-            default_value="robotiq_gripper_controller",
-            description="Robot hand controller to start.",
         )
     )
     declared_arguments.append(

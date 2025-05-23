@@ -93,7 +93,11 @@ def launch_setup(context, *args, **kwargs):
                        '-topic', 'robot_description'],
             output='screen'
         ),
+
+
     ])
+
+ 
 
     actions = [group_action_spawn_robot]
 

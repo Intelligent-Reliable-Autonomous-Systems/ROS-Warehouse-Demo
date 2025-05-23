@@ -14,7 +14,6 @@ def generate_launch_description():
 
     launch_arg_imu_filter = DeclareLaunchArgument(
         'imu_filter',
-        #default_value='/home/will-solow/clearpath/platform/config/imu_filter.yaml',
         default_value = os.path.join(pkg_jackal_description, "launch/platform/config/imu_filter.yaml"),
         description='')
 
@@ -39,6 +38,26 @@ def generate_launch_description():
                 ('use_manipulation_controllers', 'true'),
             ]
     )
+
+    node_global_localization = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_map',
+        namespace='j100_0000',
+        parameters=[
+            os.path.join(pkg_jackal_description, "launch/platform/config/global_localization.yaml")
+            ]
+        )
+    
+    node_navsat_transform = Node(
+            package='robot_localization',
+            executable='navsat_transform_node',
+            name='navsat_transform',
+            namespace='j100_0000',
+            parameters=[
+                os.path.join(pkg_jackal_description, "launch/platform/config/navsat_transform.yaml")
+                ]
+        )
 
     # Nodes
     node_cmd_vel_bridge = Node(
@@ -137,4 +156,6 @@ def generate_launch_description():
     ld.add_action(node_imu_0_gz_bridge)
     ld.add_action(node_imu_filter_node)
     ld.add_action(node_gps_0_gz_bridge)
+    ld.add_action(node_global_localization)
+    ld.add_action(node_navsat_transform)
     return ld

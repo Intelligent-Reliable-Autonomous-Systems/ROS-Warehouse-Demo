@@ -10,8 +10,6 @@
 ### Launch simulation
 1. ros2 launch warehouse_sim launch_warehouse.py
 
-sudo apt-get install ros-jazzy-clearpath-simulator
-
 ### To test movement of Jackal
 ros2 topic pub /j100_0000/cmd_vel geometry_msgs/msg/TwistStamped \
 "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'base_link'}, twist: {linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}}" \

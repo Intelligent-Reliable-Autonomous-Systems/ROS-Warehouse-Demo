@@ -8,7 +8,6 @@ from ament_index_python.packages import get_package_prefix, get_package_share_di
 import os
 
 def generate_launch_description():
-
     pkg_jackal_description = get_package_share_directory("iras_jackal_description")
 
     launch_arg_prefix = DeclareLaunchArgument(

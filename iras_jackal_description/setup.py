@@ -14,13 +14,6 @@ for dirpath, dirnames, filenames in os.walk(config_dir):
         install_path = os.path.join('share', package_name, dirpath)
         data_files.append((install_path, [full_path]))
 
-'''config_dir = "platform/"
-for dirpath, dirnames, filenames in os.walk(config_dir):
-    for f in filenames:
-        full_path = os.path.join(dirpath, f)
-        install_path = os.path.join('share', package_name, dirpath)
-        data_files.append((install_path, [full_path]))'''
-
 setup(
     name=package_name,
     version='0.0.0',

@@ -9,6 +9,7 @@ import os
 
 def generate_launch_description():
     pkg_jackal_description = get_package_share_directory("iras_jackal_description")
+
     launch_arg_prefix = DeclareLaunchArgument(
         'prefix',
         default_value='',

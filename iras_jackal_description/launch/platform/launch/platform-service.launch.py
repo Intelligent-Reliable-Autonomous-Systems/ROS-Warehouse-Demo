@@ -12,7 +12,7 @@ def generate_launch_description():
 
     launch_arg_imu_filter = DeclareLaunchArgument(
         'imu_filter',
-        default_value=os.path.join(pkg_jackal_description, 'launch/platform/config/imu_filter.yaml'),
+        default_value = os.path.join(pkg_jackal_description, "launch/platform/config/imu_filter.yaml"),
         description='')
 
     imu_filter = LaunchConfiguration('imu_filter')
@@ -148,7 +148,7 @@ def generate_launch_description():
                 {
                     'use_sim_time': True
                     ,
-                    'config_file': os.path.join(pkg_jackal_description, 'launch/sensors/config/imu_0.yaml')
+                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/imu_0.yaml")
                     ,
                 }
                 ,
@@ -209,7 +209,7 @@ def generate_launch_description():
                 {
                     'use_sim_time': True
                     ,
-                    'config_file': os.path.join(pkg_jackal_description, 'launch/sensors/config/gps_0.yaml')
+                    'config_file': os.path.join(pkg_jackal_description, "launch/sensors/config/gps_0.yaml")
                     ,
                 }
                 ,

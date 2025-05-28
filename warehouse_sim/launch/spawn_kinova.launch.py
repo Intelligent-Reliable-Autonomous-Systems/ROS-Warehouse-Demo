@@ -105,10 +105,15 @@ def launch_setup(context, *args, **kwargs):
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
+        namespace="kinova",
         parameters=[
             robot_description,
             {"use_sim_time": use_sim_time},
         ],
+        remappings=[
+        ("/tf_static", "/kinova/tf_static"),
+        ("/tf", "kinova/tf"),
+    ],
     )
 
     joint_state_broadcaster_spawner = Node(
@@ -186,6 +191,15 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
     )
 
+    tf_relay_node = Node(
+        name='kinova_relay_node',
+        executable='tf_relay',
+        package='warehouse_sim',
+        namespace='',
+        output='screen',
+        parameters=[{'namespace': 'kinova'}],
+    )
+
     nodes_to_start = [
         robot_state_publisher_node,
         joint_state_broadcaster_spawner,
@@ -194,6 +208,7 @@ def launch_setup(context, *args, **kwargs):
         gz_robotiq_env_var_resource_path,
         gz_spawn_entity,
         camera_bridge,
+        tf_relay_node
     ]
 
     return nodes_to_start

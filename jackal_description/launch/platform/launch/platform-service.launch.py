@@ -31,7 +31,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([launch_file_platform]),
         launch_arguments=
             [
-                ('setup_path',os.path.join(pkg_jackal_description, "launch/")),
+                ('setup_path', os.path.join(pkg_jackal_description, "launch/")),
                 ('use_sim_time','true'),
                 ('namespace','j100_0000'),
                 ('enable_ekf', 'true'),

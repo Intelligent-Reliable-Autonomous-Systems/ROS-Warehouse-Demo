@@ -1,0 +1,10 @@
+j100_0000:
+  clearpath_diagnostic_updater:
+    ros__parameters:
+      serial_number: 'j100-0000'
+      platform_model: 'j100'
+      ros_distro: 'jazzy'
+      latest_apt_firmware_version: 'simulated'
+      installed_apt_firmware_version: 'simulated'
+      use_sim_time: True
+

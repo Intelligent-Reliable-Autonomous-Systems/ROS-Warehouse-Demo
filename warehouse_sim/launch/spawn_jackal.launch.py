@@ -32,7 +32,9 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
     EnvironmentVariable,
     LaunchConfiguration,
-    PathJoinSubstitution
+    PathJoinSubstitution,
+    FindExecutable,
+    Command
 )
 
 from launch_ros.actions import Node
@@ -45,7 +47,7 @@ ARGUMENTS = [
 ]
 
 def launch_setup(context, *args, **kwargs):
-    pkg_jackal_description = get_package_share_directory('jackal_description')
+    pkg_jackal_description = get_package_share_directory('iras_jackal_description')
 
     world = LaunchConfiguration('world')
 
@@ -97,9 +99,38 @@ def launch_setup(context, *args, **kwargs):
 
     ])
 
- 
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [FindPackageShare("iras_jackal_description"), "launch", "robot.urdf.xacro"]
+            ),
 
-    actions = [group_action_spawn_robot]
+        ]
+    )
+    robot_description = {"robot_description": robot_description_content.perform(context)}
+
+    robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="screen",
+        namespace=namespace,
+        parameters=[robot_description],
+    )
+
+    tf_relay_node = Node(
+        name='j100_0000_relay_node',
+        executable='tf_relay',
+        package='warehouse_sim',
+        namespace='',
+        output='screen',
+        parameters=[{'namespace': 'j100_0000'}],
+    )
+
+    actions = [group_action_spawn_robot,
+               tf_relay_node,
+               robot_state_publisher]
 
     return actions
 

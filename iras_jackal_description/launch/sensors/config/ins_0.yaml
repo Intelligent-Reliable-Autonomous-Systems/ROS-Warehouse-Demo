@@ -1,0 +1,9 @@
+- ros_topic_name: /sensors/ins_0/imu
+  gz_topic_name: /j100_0000/sensors/ins_0/imu/data
+  ros_type_name: sensor_msgs/msg/Imu
+  gz_type_name: gz.msgs.IMU
+
+- ros_topic_name: /sensors/ins_0/imu/mag
+  gz_topic_name: /j100_0000/sensors/ins_0/imu/magnetic
+  ros_type_name: sensor_msgs/msg/MagneticField
+  gz_type_name: gz.msgs.Magnetometer

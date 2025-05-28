@@ -16,6 +16,7 @@ ros2 topic pub /j100_0000/cmd_vel geometry_msgs/msg/TwistStamped \
 "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'base_link'}, twist: {linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}}" \
 --once
 
+
 ### To test movement of Kinova Arm
 
 ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "{
@@ -24,3 +25,11 @@ ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/Joi
     { positions: [1.75, 1, -0.5, 1, -1.5, 1.5], time_from_start: { sec: 2 } },
   ]
 }"
+
+### To view data in Rviz2 with Kinova/Jackal
+ros2 run rviz2 rviz2 --ros-args -r /tf:=/kinova/tf
+ros2 run rviz2 rviz2 --ros-args -r /tf:=/j100_0000/tf
+
+### To echo tf frames
+ros2 run tf2_tools view_frames --ros-args -r /tf:=/kinova/tf
+ros2 run tf2_tools view_frames --ros-args -r /tf:=/j100_0000/tf

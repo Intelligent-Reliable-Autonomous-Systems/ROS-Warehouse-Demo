@@ -40,4 +40,4 @@ j100_0000:
       angular.z.max_acceleration: 25.0
       angular.z.max_deceleration: -25.0
       angular.z.max_jerk: nan
-      angular.z.min_jerk: nan
+ 

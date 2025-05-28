@@ -22,7 +22,7 @@ def generate_launch_description():
         name='lidar2d_0_gz_bridge',
         executable='parameter_bridge',
         package='ros_gz_bridge',
-        namespace='j100_0000/sensors/',
+        namespace='j100_0000/',
         output='screen',
         parameters=
             [

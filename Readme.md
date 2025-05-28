@@ -8,15 +8,20 @@
 6. source install/local_setup.bash 
 
 ### Launch simulation
-1. ros2 launch warehouse_setup launch_warehouse.py
+1. ros2 launch warehouse_sim launch_warehouse.py
 
-sudo apt-get install ros-jazzy-ros-gz
 sudo apt-get install ros-jazzy-clearpath-simulator
 
-wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_simulator/jazzy/dependencies.repos
-vcs import src < dependencies.repos
-rosdep install -r --from-paths src -i -y
-
+### To test movement of Jackal
 ros2 topic pub /j100_0000/cmd_vel geometry_msgs/msg/TwistStamped \
 "{header: {stamp: {sec: 0, nanosec: 0}, frame_id: 'base_link'}, twist: {linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}}" \
 --once
+
+### To test movement of Kinova Arm
+
+ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "{
+  joint_names: [kinova/joint_1, kinova/joint_2, kinova/joint_3, kinova/joint_4, kinova/joint_5, kinova/joint_6],
+  points: [
+    { positions: [1.75, 1, -0.5, 1, -1.5, 1.5], time_from_start: { sec: 2 } },
+  ]
+}"

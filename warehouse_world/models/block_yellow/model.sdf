@@ -11,7 +11,23 @@
               <size>0.05 0.05 0.05</size> 
             </box>
           </geometry>
+          <surface>
+            <contact>
+              <collide_without_contact>false</collide_without_contact>
+            </contact>
+          </surface>
         </collision>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.333e-05</ixx>
+            <ixy>0.0</ixy>
+            <ixz>0.0</ixz>
+            <iyy>8.333e-05</iyy>
+            <iyz>0.0</iyz>
+            <izz>8.333e-05</izz>
+          </inertia>
+        </inertial>
         <visual name="visual">
           <geometry>
             <box>

@@ -394,9 +394,9 @@ ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/Joi
 }"
 
 ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "{
-  joint_names: [kinova/joint_1, kinova/joint_2, kinova/joint_3, kinova/joint_4, kinova/joint_5, kinova/joint_6, kinova/right_finger_bottom_joint],
+  joint_names: [kinova/joint_1, kinova/joint_2, kinova/joint_3, kinova/joint_4, kinova/joint_5, kinova/joint_6],
   points: [
-    { positions: [1.75, 1, -0.5, 1, -1.5, 1.5, 1], time_from_start: { sec: 2 } },
+    { positions: [1.75, 1, -0.5, 1, -1.5, 1.5], time_from_start: { sec: 2 } },
   ]
 }"
 

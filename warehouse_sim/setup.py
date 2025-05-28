@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 import os
 from glob import glob
-package_name = 'warehouse_setup'
+package_name = 'warehouse_sim'
 
 data_files = [
         ('share/ament_index/resource_index/packages',

@@ -29,7 +29,7 @@ def launch_setup(context, *args, **kwargs):
     spawn_jackal = LaunchConfiguration("spawn_jackal")
 
     pkg_warehouseworld = get_package_share_directory('warehouse_world')
-    pkg_warehouse_setup = get_package_share_directory('warehouse_setup')
+    pkg_warehouse_sim = get_package_share_directory('warehouse_sim')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
     pkg_clearpath_gz = get_package_share_directory('clearpath_gz')
     
@@ -59,7 +59,7 @@ def launch_setup(context, *args, **kwargs):
 
     # Kinova Arm Launch Description
     kinova_arm_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(PathJoinSubstitution([pkg_warehouse_setup, 'launch', 'spawn_kinova.launch.py'])),
+        PythonLaunchDescriptionSource(PathJoinSubstitution([pkg_warehouse_sim, 'launch', 'spawn_kinova.launch.py'])),
         launch_arguments={}.items(),
         condition=IfCondition(spawn_arm),
     )
@@ -67,7 +67,7 @@ def launch_setup(context, *args, **kwargs):
     # Jackal Launch Description
     jackal_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(PathJoinSubstitution(
-        [pkg_warehouse_setup, 'launch', 'spawn_jackal.launch.py'])),
+        [pkg_warehouse_sim, 'launch', 'spawn_jackal.launch.py'])),
         launch_arguments={
             "world": "warehouse",
         }.items(),

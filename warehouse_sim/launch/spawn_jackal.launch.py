@@ -115,8 +115,9 @@ def launch_setup(context, *args, **kwargs):
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="screen",
-        namespace=namespace,
+        namespace=f"{namespace}/full_description",
         parameters=[robot_description],
+
     )
 
     tf_relay_node = Node(
@@ -130,7 +131,8 @@ def launch_setup(context, *args, **kwargs):
 
     actions = [group_action_spawn_robot,
                tf_relay_node,
-               robot_state_publisher]
+               robot_state_publisher, #NOTE this causes the controller manager to fail silently :(
+               ]
 
     return actions
 

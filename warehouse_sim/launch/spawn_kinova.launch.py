@@ -105,7 +105,6 @@ def launch_setup(context, *args, **kwargs):
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
-        namespace="kinova",
         parameters=[
             robot_description,
             {"use_sim_time": use_sim_time},

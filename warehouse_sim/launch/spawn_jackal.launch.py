@@ -115,7 +115,8 @@ def launch_setup(context, *args, **kwargs):
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="screen",
-        namespace=f"{namespace}/full_description",
+        namespace=f"{namespace}/full_description", # need to publish on /full_description to avoid conflicts that cause
+                                                   # controller to fail silently
         parameters=[robot_description],
 
     )
@@ -131,7 +132,7 @@ def launch_setup(context, *args, **kwargs):
 
     actions = [group_action_spawn_robot,
                tf_relay_node,
-               robot_state_publisher, #NOTE this causes the controller manager to fail silently :(
+               robot_state_publisher,
                ]
 
     return actions

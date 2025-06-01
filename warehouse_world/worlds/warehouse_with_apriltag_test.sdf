@@ -280,5 +280,13 @@
         package://warehouse_world/models/big_block_purple
         </uri>
     </include>
+    
+    <include>
+      <uri>model://Apriltag36_11_00000</uri>
+      <name>Apriltag36_11_00000</name>
+      <pose>0 9.9 0.6 1.570795 0 0</pose>
+      <static>true</static>
+      <scale>2 2 1</scale>
+    </include>
   </world>
 </sdf>

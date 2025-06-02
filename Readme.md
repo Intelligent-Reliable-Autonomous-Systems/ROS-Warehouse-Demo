@@ -12,7 +12,7 @@
 - `ros2 launch warehouse_sim launch_warehouse.py`
    
 ### Launch simulation (with apriltag)
-- `ros2 launch warehouse_sim launch_warehouse_with_apriltag_test.py`
+- `ros2 launch warehouse_sim launch_warehouse_with_apriltags.py`
 
 ### To test movement of Jackal
 ```bash

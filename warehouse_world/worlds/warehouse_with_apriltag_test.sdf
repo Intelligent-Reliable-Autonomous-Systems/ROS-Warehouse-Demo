@@ -267,7 +267,7 @@
     
     <include>
         <name>BigGreenBlock</name>
-        <pose>-8 6 0 0 0 0</pose>
+        <pose>-8 0 0 0 0 0</pose>
         <uri>
         package://warehouse_world/models/big_block_green
         </uri>
@@ -275,7 +275,7 @@
 
     <include>
         <name>BigPurpleBlock</name>
-        <pose>-5 -2 0 0 0 0</pose>
+        <pose>-5 -4 0 0 0 0</pose>
         <uri>
         package://warehouse_world/models/big_block_purple
         </uri>
@@ -284,8 +284,75 @@
     <include>
       <uri>model://Apriltag36_11_00000</uri>
       <name>Apriltag36_11_00000</name>
-      <pose>0 9.9 0.6 1.570795 0 0</pose>
+      <pose>-6.0 9.9 0.5 1.570795 0 0</pose>
       <static>true</static>
+    </include>
+    
+    <include>
+      <uri>model://Bookshelf</uri>
+      <name>BookShelf</name>
+      <pose>-7.5 9.85 -0.4 0 0 0</pose> 
+      <!--<static>true</static>-->
+    </include>
+    
+    <include>
+        <name>RedBlock_stock1</name>
+        <pose>-7.85 9.5 0.07 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_red
+        </uri>
+    </include>
+    <include>
+        <name>RedBlock_stock2</name>
+        <pose>-7.75 9.5 0.07 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_red
+        </uri>
+    </include>
+    
+    <include>
+        <name>GreenBlock_stock1</name>
+        <pose>-7.55 9.5 0.07 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_green
+        </uri>
+    </include>
+    <include>
+        <name>GreenBlock_stock2</name>
+        <pose>-7.45 9.5 0.07 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_green
+        </uri>
+    </include>
+    
+    <include>
+        <name>PurpleBlock_stock1</name>
+        <pose>-7.85 9.5 0.45 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_purple
+        </uri>
+    </include>
+    <include>
+        <name>PurpleBlock_stock2</name>
+        <pose>-7.75 9.5 0.45 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_purple
+        </uri>
+    </include>
+    
+    <include>
+        <name>YellowBlock_stock1</name>
+        <pose>-7.55 9.5 0.45 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_yellow
+        </uri>
+    </include>
+    <include>
+        <name>YellowBlock_stock2</name>
+        <pose>-7.45 9.5 0.45 0 0 0</pose>
+        <uri>
+        package://warehouse_world/models/block_yellow
+        </uri>
     </include>
   </world>
 </sdf>

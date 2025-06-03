@@ -1,9 +1,15 @@
+import os
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
+
+    pkg_share = get_package_share_directory('camera_detection')
+    default_cfg = os.path.join(pkg_share, 'config', 'camera_info.yaml')
+
     # Camera Launch Arguments (from camera.py)
     video_device = LaunchConfiguration('video_device', default='/dev/video0')
     camera_name = LaunchConfiguration('camera_name', default='anker_c200')
@@ -11,10 +17,10 @@ def generate_launch_description():
     image_height = LaunchConfiguration('image_height', default='480')
     pixel_format = LaunchConfiguration('pixel_format', default='yuyv')
     frame_id = LaunchConfiguration('frame_id', default='camera_optical_frame')
-    camera_info_url = LaunchConfiguration('camera_info_url', default='package://manipulation_camera/config/camera_info.yaml')
+    camera_info_url = LaunchConfiguration('camera_info_url', default=f'file://{default_cfg}')
 
     # Calibration specific launch arguments
-    checkerboard_size = LaunchConfiguration('checkerboard_size', default='8x6')
+    checkerboard_size = LaunchConfiguration('checkerboard_size', default='9x6')
     square_size = LaunchConfiguration('square_size', default='0.025') # in meters
 
     return LaunchDescription([
@@ -25,10 +31,10 @@ def generate_launch_description():
         DeclareLaunchArgument('image_height', default_value='480', description='Image height'),
         DeclareLaunchArgument('pixel_format', default_value='yuyv', description='Pixel format (yuyv, mjpeg2rgb, etc.)'),
         DeclareLaunchArgument('frame_id', default_value='camera_optical_frame', description='Camera frame_id'),
-        DeclareLaunchArgument('camera_info_url', default_value='package://manipulation_camera/config/camera_info.yaml', description='URL to camera calibration file'),
+        DeclareLaunchArgument('camera_info_url', default_value=f'file://{default_cfg}', description='URL to camera calibration file'),
 
         # Declare calibration specific arguments
-        DeclareLaunchArgument('checkerboard_size', default_value='8x6', description='Number of inner corners on the checkerboard (e.g., 8x6 for a 9x7 board)'),
+        DeclareLaunchArgument('checkerboard_size', default_value='9x6', description='Number of inner corners on the checkerboard (e.g., 9x6 for a 10x7 board)'),
         DeclareLaunchArgument('square_size', default_value='0.025', description='Size of a square on the checkerboard in meters'),
 
         # Launch the USB camera node
@@ -65,10 +71,11 @@ def generate_launch_description():
             arguments=[
                 '--size', checkerboard_size,
                 '--square', square_size,
+                # '--target', camera_name,
             ],
             remappings=[
                 ('image',  '/camera/image_raw'),
             ],
             output='screen'
-        )
+        ),
     ])

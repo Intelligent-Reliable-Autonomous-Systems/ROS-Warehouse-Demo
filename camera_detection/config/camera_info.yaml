@@ -1,0 +1,26 @@
+image_width: 640
+image_height: 480
+camera_name: anker_c200
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [509.5597 ,   0.     , 332.5645 ,
+           0.     , 518.24644, 229.98801,
+           0.     ,   0.     ,   1.     ]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.159378, -0.185354, -0.002781, 0.004740, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1., 0., 0.,
+         0., 1., 0.,
+         0., 0., 1.]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [526.59351,   0.     , 334.97551,   0.     ,
+           0.     , 537.03387, 228.24814,   0.     ,
+           0.     ,   0.     ,   1.     ,   0.     ]

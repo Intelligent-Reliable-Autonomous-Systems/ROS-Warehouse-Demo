@@ -5,7 +5,7 @@
 3. `git clone git@github.com:Intelligent-Reliable-Autonomous-Systems/ROS-Warehouse-Demo.git src`
 4. `rosdep install --from-paths src --ignore-src -r -y`
 5. `sudo apt-get install ros-jazzy-ros-gz && sudo apt-get install ros-jazzy-clearpath-simulator`
-6. `colcon build`
+6. `colcon build --executor sequential --allow-overriding kortex_description nav2_behavior_tree nav2_core nav2_graceful_controller nav2_msgs nav2_util`
 7. `source install/local_setup.bash `
 
 ### Launch simulation (without apriltag)

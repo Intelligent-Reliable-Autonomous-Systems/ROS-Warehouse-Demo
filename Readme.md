@@ -38,6 +38,16 @@ ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/Joi
   ]
 }"
 ```
+positions: [2.23, 1.67, -0.0, .9, -1.2, 1]
+ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "{
+  joint_names: [kinova/joint_1, kinova/joint_2, kinova/joint_3, kinova/joint_4, kinova/joint_5, kinova/joint_6],
+  points: [
+    { positions: [2.23, 1.67, -0.0, .9, -1.2, 1], time_from_start: { sec: 2 } },
+  ]
+}"
+
+ros2 action send_goal gen3_lite_2f_gripper_controller/gripper_cmd control_msgs/action/GripperCommand "{command:{position: 0.0, max_effort: 100.0}}"
+
 
 ### To view data in Rviz2 with Kinova/Jackal
 ```bash

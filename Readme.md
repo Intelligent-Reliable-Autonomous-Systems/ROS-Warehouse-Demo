@@ -14,7 +14,8 @@
 - `ros2 launch warehouse_sim launch_warehouse.py`
    
 ### Launch simulation (with apriltag)
-- `ros2 launch warehouse_sim launch_warehouse_with_apriltags.py`
+- `ros2 launch warehouse_sim launch_warehouse_with_apriltags.py     # Terminal 1`
+- `python3 ~/ros2_ws/src/scripts/timed_twist_sequence.py     # Terminal 2`
 
 ### To test movement of Jackal
 ```bash

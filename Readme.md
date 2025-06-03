@@ -7,7 +7,7 @@
 5. `cd ..`
 6. `rosdep install --from-paths src --ignore-src -r -y`
 7. `sudo apt-get install ros-jazzy-ros-gz && sudo apt-get install ros-jazzy-clearpath-simulator`
-8. `colcon build --executor sequential --allow-overriding kortex_description nav2_behavior_tree nav2_core nav2_graceful_controller nav2_msgs nav2_util`
+8. `colcon build --executor sequential --allow-overriding kortex_description`
 9. `source install/local_setup.bash `
 
 ### Launch simulation (without apriltag)

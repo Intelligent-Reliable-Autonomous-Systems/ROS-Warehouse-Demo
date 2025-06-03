@@ -1,0 +1,5 @@
+repositories:
+  src:
+    type: git
+    url: git@github.com:Intelligent-Reliable-Autonomous-Systems/ROS-Warehouse-Demo.git
+    version: 6add9303894ca6645d2849f604366dc3977f5674

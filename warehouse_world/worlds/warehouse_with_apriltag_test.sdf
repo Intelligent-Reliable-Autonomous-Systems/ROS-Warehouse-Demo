@@ -1,4 +1,3 @@
-
 <?xml version="1.0" ?>
 <sdf version="1.9">
   <world name="warehouse">
@@ -26,7 +25,7 @@
     <model name="table_camera">
       <static>true</static>
       <link name="camera_link">
-        <pose>7 0 2.5 0 0.5 0</pose> <!-- position/orientation -->
+        <pose>9 -0.4 2 0 1.57 1.57</pose> <!-- position/orientation -->
         <sensor name="rgbd_camera" type="depth">
           <pose>0 0 0 0 0 0</pose>
           <update_rate>30</update_rate>
@@ -210,10 +209,10 @@
     </include>
 
     <include>
-        <name>BlueBlock</name>
+        <name>BlueBlockApril</name>
         <pose>9.2 -0.6 1.03 0 0 0</pose>
         <uri>
-        package://warehouse_world/models/block_blue
+        package://warehouse_world/models/block_blue_april
         </uri>
     </include>
 
@@ -234,10 +233,10 @@
     </include>
 
     <include>
-        <name>YellowBlock</name>
+        <name>YellowBlockApril</name>
         <pose>8.9 -0.4 1.03 0 0 0</pose>
         <uri>
-        package://warehouse_world/models/block_yellow
+        package://warehouse_world/models/block_yellow_april
         </uri>
     </include>
 
@@ -282,8 +281,8 @@
     </include>
     
     <include>
-      <uri>model://Apriltag36_11_00000</uri>
-      <name>Apriltag36_11_00000</name>
+      <uri>model://Apriltag36_11_00001_large</uri>
+      <name>Apriltag36_11_00001_large</name>
       <pose>-6.0 9.9 0.5 1.570795 0 0</pose>
       <static>true</static>
     </include>

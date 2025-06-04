@@ -204,6 +204,10 @@
       </link>
       <gazebo reference="${prefix}left_finger_dist_link">
         <material>Kortex/Blue</material>
+        <mu1>1.0</mu1>       <!-- Primary friction coefficient -->
+        <mu2>1.0</mu2>       <!-- Secondary friction coefficient -->
+        <kp>100000</kp>      <!-- Contact stiffness -->
+        <kd>1.0</kd>         <!-- Contact damping -->
       </gazebo>
       <joint name="${prefix}left_finger_tip_joint" type="revolute">
         <origin xyz="-0.045636 -0.020423 6.9901E-05" rpy="0 0 0" />
@@ -284,6 +288,10 @@
       </link>
       <gazebo reference="${prefix}right_finger_prox_link">
         <material>Kortex/Gray</material>
+        <mu1>1.0</mu1>       <!-- Primary friction coefficient -->
+        <mu2>1.0</mu2>       <!-- Secondary friction coefficient -->
+        <kp>100000</kp>      <!-- Contact stiffness -->
+        <kd>1.0</kd>         <!-- Contact damping -->
       </gazebo>
       <!-- TODO(MarqRazz) look into why the joint and limits needed to be flipped and modified -->
       <joint name="${prefix}right_finger_bottom_joint" type="revolute">
@@ -351,6 +359,10 @@
       </link>
       <gazebo reference="${prefix}left_finger_prox_link">
         <material>Kortex/Gray</material>
+        <mu1>1.0</mu1>       <!-- Primary friction coefficient -->
+        <mu2>1.0</mu2>       <!-- Secondary friction coefficient -->
+        <kp>100000</kp>      <!-- Contact stiffness -->
+        <kd>1.0</kd>         <!-- Contact damping -->
       </gazebo>
       <joint name="${prefix}left_finger_bottom_joint" type="revolute">
         <origin xyz="0 0.0305 0.070003" rpy="-1.571 0.611 -1.571" />
@@ -464,6 +476,10 @@
     </link>
     <gazebo reference="right_finger_prox_link">
       <material>Kortex/Gray</material>
+      <mu1>1.0</mu1>       <!-- Primary friction coefficient -->
+      <mu2>1.0</mu2>       <!-- Secondary friction coefficient -->
+      <kp>100000</kp>      <!-- Contact stiffness -->
+      <kd>1.0</kd>         <!-- Contact damping -->
     </gazebo>
     <joint name="right_finger_bottom_joint" type="revolute">
       <origin xyz="0 -0.030501 0.070003" rpy="0 1.5708 0" />

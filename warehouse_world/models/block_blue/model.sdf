@@ -24,7 +24,7 @@
           </surface>
         </collision>
         <inertial>
-          <mass>0.1</mass>
+          <mass>0.005</mass>
           <inertia>
             <ixx>8.333e-05</ixx>
             <ixy>0.0</ixy>

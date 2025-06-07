@@ -15,6 +15,7 @@ setup(
             'launch/calibrate.py',
             'launch/manipulation_camera_real.py',
             'launch/manipulation_camera_gz.py',
+            'launch/detection_manager.py',
         ]),
         ('share/' + package_name + '/config', ['config/camera_info.yaml']),
     ],
@@ -29,6 +30,7 @@ setup(
         'console_scripts': [
             'grid_overlay = camera_detection.grid_overlay:main',
             'camera_tf = camera_detection.camera_tf:main',
+            'detection_manager = camera_detection.detection_manager:main',
         ],
     },
 )

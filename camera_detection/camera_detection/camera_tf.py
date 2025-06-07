@@ -28,9 +28,9 @@ class CameraPoseInKinova(Node):
         static_tf.header.stamp = self.get_clock().now().to_msg()
         static_tf.header.frame_id    = self.kinova_base_link_frame
         static_tf.child_frame_id     = self.tag0_anchor_frame
-        static_tf.transform.translation.x = 0.10
-        static_tf.transform.translation.y = 0.00
-        static_tf.transform.translation.z = 0.75
+        static_tf.transform.translation.x = 0.00
+        static_tf.transform.translation.y = -0.20
+        static_tf.transform.translation.z = 0.00
         # rotation quaternion for roll=0,pitch=0,yaw=0
         q = t3.quaternion_from_euler(0.0, 0.0, 0.0)
         static_tf.transform.rotation.x = q[0]

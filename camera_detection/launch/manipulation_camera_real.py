@@ -114,5 +114,15 @@ def generate_launch_description():
             package='camera_detection',
             executable='camera_tf',
             name='camera_tf',
+        ),
+
+        Node(
+            package='camera_detection',
+            executable='detection_manager',
+            name='detection_manager',
+            output='screen',
+            parameters=[{
+                'use_sim_time': True,  # Set to False for real robot
+            }]
         )
     ]) 

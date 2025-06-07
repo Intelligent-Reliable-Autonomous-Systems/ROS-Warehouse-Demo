@@ -82,7 +82,7 @@ def launch_setup(context, *args, **kwargs):
             "-x",
             "9.0",  # 0.1 meter in front of arm (arm is at 9.0)
             "-y", 
-            "-0.1",  # Same Y as arm
+            "-0.2",  # Same Y as arm
             "-z",
             "1.02",  # Slightly higher than arm base
             "-R",

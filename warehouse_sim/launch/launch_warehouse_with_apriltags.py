@@ -32,6 +32,7 @@ def launch_setup(context, *args, **kwargs):
     pkg_warehouse_sim = get_package_share_directory('warehouse_sim')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
     pkg_clearpath_gz = get_package_share_directory('clearpath_gz')
+    pkg_camera_detection = get_package_share_directory('camera_detection')
     
     warehouse_resource_path = AppendEnvironmentVariable(
         "GZ_SIM_RESOURCE_PATH", PathJoinSubstitution([pkg_warehouseworld, 'models'])
@@ -64,6 +65,37 @@ def launch_setup(context, *args, **kwargs):
         condition=IfCondition(spawn_arm),
     )
 
+    apriltag_spawn_entity = Node(
+        package="ros_gz_sim",
+        executable="create",
+        output="screen",
+        arguments=[
+            "-file",
+            PathJoinSubstitution([
+                FindPackageShare("warehouse_world"),
+                "models",
+                "Apriltag36_11_00000",
+                "model.sdf"
+            ]),
+            "-name",
+            "apriltag_in_front_of_arm",
+            "-x",
+            "9.0",  # 0.1 meter in front of arm (arm is at 9.0)
+            "-y", 
+            "-0.1",  # Same Y as arm
+            "-z",
+            "1.02",  # Slightly higher than arm base
+            "-R",
+            "0.0",
+            "-P",
+            "0.0",
+            "-Y",
+            "0.0",
+            "-static",
+            "true",
+        ]
+    )
+
     # Jackal Launch Description
     jackal_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(PathJoinSubstitution(
@@ -90,16 +122,18 @@ def launch_setup(context, *args, **kwargs):
             name='table_camera_bridge',
             output='screen',
             arguments=[
-                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+                # '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
                 '/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
-                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image',
-                '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
+                # '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image',
+                # '/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
             ],
             remappings=[
-                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image', '/table_camera/depth/image_raw'),
-                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/camera_info', '/table_camera/camera_info'),
-                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/image', '/table_camera/image/image_raw'),
-                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image/points', '/table_camera/depth/points'),
+                # ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image', '/table_camera/depth/image_raw'),
+                # ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/camera_info', '/table_camera/depth/camera_info'),
+                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/image', '/table_camera/image_raw'),
+                ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgb_camera/camera_info', '/table_camera/camera_info'),
+                # ('/world/warehouse/model/table_camera/link/camera_link/sensor/rgbd_camera/depth_image/points', '/table_camera/depth/points'),
             ]
         )
     
@@ -122,15 +156,22 @@ def launch_setup(context, *args, **kwargs):
             ]
         )
 
+    table_camera_detection_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(PathJoinSubstitution([pkg_camera_detection, 'launch', 'manipulation_camera_gz.py'])),
+        launch_arguments={}.items(),
+    )
+
     nodes_to_launch = [
         gz_sim_resource_path,
         warehouse_resource_path,
         gz_launch_description,
         kinova_arm_launch,
+        apriltag_spawn_entity,
         jackal_launch,
         clock_bridge,
         table_camera_bridge,
         world_camera_bridge,
+        table_camera_detection_launch,
     ]
 
     return nodes_to_launch

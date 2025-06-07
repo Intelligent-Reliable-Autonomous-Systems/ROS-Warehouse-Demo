@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>manipulation_camera</name>
+  <name>camera_detection</name>
   <version>0.0.0</version>
   <description>An external camera for detecting objects in a manipulation workspace</description>
   <maintainer email="jewettje@oregonstate.edu">jjewett</maintainer>
@@ -14,6 +14,9 @@
   <depend>camera_info_manager</depend>
   <depend>image_pipeline</depend>
   <depend>camera_calibration</depend>
+  <depend>cv_bridge</depend>
+  <build_depend>python3-opencv</build_depend>
+  <exec_depend>python3-opencv</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

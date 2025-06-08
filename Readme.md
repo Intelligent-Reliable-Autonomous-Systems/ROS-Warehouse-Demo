@@ -55,7 +55,7 @@ ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/Joi
 `ros2 run rviz2 rviz2 --ros-args -r /tf:=/j100_0000/tf`
 
 ### To echo tf frames
-ros2 run tf2_tools view_frames --ros-args -r /tf:=/kinova/tf
+`ros2 run tf2_tools view_frames --ros-args -r /tf:=/kinova/tf`
 
-ros2 run tf2_tools view_frames --ros-args -r /tf:=/j100_0000/tf
+`ros2 run tf2_tools view_frames --ros-args -r /tf:=/j100_0000/tf`
 
